@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ForgeMarket — Industrial Materials</title>
+  <style>
+    :root{--ink:#142538;--muted:#697a8b;--navy:#102b45;--blue:#1769aa;--orange:#f39a36;--line:#e5ebf0;--bg:#f5f7f9}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select{font:inherit}button{cursor:pointer}
+    .topbar{background:var(--navy);color:#d8e4ee;font-size:12px;padding:8px max(5%,calc((100% - 1200px)/2));display:flex;justify-content:space-between;gap:20px}.topbar a{color:inherit;text-decoration:none;margin-left:18px}
+    header{background:#fff;border-bottom:1px solid var(--line)}.head{max-width:1200px;margin:auto;padding:18px 20px;display:flex;align-items:center;gap:28px}.brand{font-weight:850;font-size:24px;letter-spacing:-1px;white-space:nowrap}.brand span{color:var(--orange)}.search{display:flex;flex:1;min-width:150px;border:1px solid #cbd5de;border-radius:7px;overflow:hidden;height:44px}.search input{border:0;outline:0;padding:0 14px;flex:1;min-width:0}.search button{border:0;background:var(--orange);padding:0 20px;font-weight:700;color:#172536}.head-action{border:0;background:none;color:var(--ink);font-weight:650;white-space:nowrap}.cart-count{background:var(--orange);border-radius:50%;padding:2px 7px;margin-left:5px}
+    nav{max-width:1200px;margin:auto;padding:0 20px 12px;display:flex;gap:25px;overflow:auto}nav a{color:#405365;text-decoration:none;font-size:13px;white-space:nowrap}nav a:hover{color:var(--blue)}
+    main{max-width:1200px;margin:26px auto;padding:0 20px}.hero{background:linear-gradient(110deg,#102b45 0%,#194e71 75%,#26739a 100%);border-radius:12px;color:white;padding:38px 42px;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:220px}.hero h1{font-size:34px;line-height:1.15;margin:0 0 12px;max-width:570px;letter-spacing:-.7px}.hero p{margin:0 0 22px;color:#d6e2eb}.primary{border:0;border-radius:6px;padding:11px 18px;background:var(--orange);font-weight:750;color:#192c3d}.hero-note{font-size:13px;color:#d7e7ef;border:1px solid #ffffff55;border-radius:9px;padding:16px 18px;max-width:210px}.hero-note strong{display:block;font-size:19px;color:white;margin-bottom:3px}
+    .benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0 32px}.benefit{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px;font-size:13px;color:var(--muted)}.benefit b{display:block;color:var(--ink);font-size:14px;margin-bottom:2px}
+    .section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:15px;gap:12px}.section-head h2{font-size:23px;margin:0;letter-spacing:-.4px}.section-head p{margin:3px 0 0;color:var(--muted);font-size:13px}.filters{display:flex;gap:8px}.filters select{background:white;border:1px solid var(--line);border-radius:6px;padding:8px 10px;color:#415365}
+    .layout{display:grid;grid-template-columns:220px 1fr;gap:18px}.sidebar,.product{background:white;border:1px solid var(--line);border-radius:9px}.sidebar{padding:17px;height:max-content}.sidebar h3{font-size:15px;margin:0 0 12px}.category{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #eef1f4;color:#445667;font-size:13px;cursor:pointer}.category:last-child{border:0}.category.active{color:var(--blue);font-weight:700}.category span{color:#91a0ad}.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.product{overflow:hidden;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s}.product:hover{transform:translateY(-2px);box-shadow:0 8px 22px #18364c12}.product-art{height:142px;display:grid;place-items:center;background:linear-gradient(145deg,#edf2f5,#f8fafb);font-size:58px}.product-body{padding:14px;display:flex;flex-direction:column;flex:1}.tag{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:#1769aa;font-weight:750}.product h3{font-size:16px;margin:5px 0 3px}.spec{font-size:12px;color:var(--muted);min-height:36px}.origin{font-size:11px;color:var(--muted);margin-top:3px}.rating{font-size:12px;color:#b87515;margin:6px 0}.price{font-size:19px;font-weight:800;margin-top:auto}.price small{font-size:11px;color:var(--muted);font-weight:500}.moq{font-size:11px;color:var(--muted);margin:2px 0 12px}.add{width:100%;border:1px solid #bfd2df;background:#f5fafc;border-radius:5px;color:#145b89;padding:8px;font-size:12px;font-weight:700}.add:hover{background:#e8f4fb}.empty{grid-column:1/-1;padding:50px;text-align:center;color:var(--muted);background:white;border-radius:9px}
+    .footer{margin-top:44px;background:#102b45;color:#d9e5ed;padding:28px 20px;text-align:center;font-size:12px}.footer strong{font-size:16px;color:white}.toast{position:fixed;bottom:20px;right:20px;background:#183f5b;color:white;border-radius:7px;padding:12px 18px;box-shadow:0 5px 18px #0003;opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:none}
+    [hidden]{display:none!important}.auth-dialog{width:min(420px,calc(100% - 32px));padding:0;border:0;border-radius:12px;box-shadow:0 20px 60px #102b4540}.auth-dialog::backdrop{background:#102b4577}.auth-form{position:relative;padding:28px}.auth-form h2{margin:0;font-size:24px}.auth-description{margin:5px 0 20px;color:var(--muted);font-size:13px}.auth-form label{display:block;margin:14px 0 0;font-size:13px;font-weight:650}.auth-form input{display:block;width:100%;height:42px;margin-top:5px;padding:0 11px;border:1px solid #cbd5de;border-radius:6px}.auth-close{position:absolute;top:17px;right:17px;border:0;background:none;font-size:25px;color:var(--muted)}.auth-error{min-height:20px;margin:12px 0 3px;color:#a52d2d;font-size:13px}.auth-submit{width:100%}.auth-switch{text-align:center;margin:17px 0 0;font-size:13px;color:var(--muted)}.auth-switch button{border:0;background:none;color:var(--blue);font-weight:700;padding:0}
+    .checkout-content{position:relative;padding:28px}.checkout-content h2{margin:0;font-size:24px}.cart-lines{max-height:250px;overflow:auto;border-top:1px solid var(--line)}.cart-line{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px}.cart-line-name{font-weight:650}.cart-line-price{color:var(--muted);font-size:12px}.cart-controls{display:flex;align-items:center;gap:8px}.cart-controls button{width:28px;height:28px;border:1px solid var(--line);border-radius:5px;background:white;color:var(--ink)}.cart-total{display:flex;justify-content:space-between;align-items:center;margin:16px 0;font-size:15px}.cart-total strong{font-size:20px}.payment-label{display:block;margin:10px 0 5px;font-size:13px;font-weight:650}.payment-select{width:100%;padding:10px;border:1px solid #cbd5de;border-radius:6px;background:white}.mock-disclaimer{padding:10px;background:#fff7e8;border-radius:6px;color:#77551d;font-size:12px}.order-reference{padding:12px;background:#f5f7f9;border-radius:6px;font-size:13px}.order-reference strong{overflow-wrap:anywhere}
+    @media(max-width:850px){.layout{grid-template-columns:1fr}.sidebar{display:flex;align-items:center;gap:15px;overflow:auto;padding:10px}.sidebar h3{white-space:nowrap;margin:0}.category{white-space:nowrap;border:0;padding:6px}.benefits{grid-template-columns:repeat(2,1fr)}.products{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-note{display:none}}
+    @media(max-width:560px){.topbar{justify-content:center}.topbar a{display:none}.head{gap:10px;flex-wrap:wrap}.brand{font-size:21px}.head-action{font-size:12px}.search{order:3;flex-basis:100%}.hero{padding:28px 23px;min-height:0}.hero h1{font-size:28px}.benefits{gap:8px}.benefit{padding:11px;font-size:11px}.section-head{align-items:start;flex-direction:column}.products{grid-template-columns:1fr 1fr;gap:9px}.product-art{height:105px;font-size:43px}.product-body{padding:10px}.product h3{font-size:14px}.spec{font-size:11px}.filters select{font-size:12px}.sidebar{gap:8px}}
+  </style>
+</head>
+<body>
+  <div class="topbar"><span>Industrial sourcing, made simpler</span><div><a href="#">Sell on ForgeMarket</a><a href="#">Help &amp; support</a></div></div>
+  <header>
+    <div class="head">
+      <div class="brand">Forge<span>Market</span></div>
+      <form class="search" id="searchForm"><input id="searchInput" type="search" placeholder="Search materials, grades, or suppliers…" aria-label="Search materials"><button>Search</button></form>
+      <button class="head-action" id="signInButton" type="button">Sign in</button>
+      <button class="head-action" id="signUpButton" type="button">Sign up</button>
+      <span class="head-action" id="accountButton" hidden></span>
+      <button class="head-action" id="signOutButton" type="button" hidden>Sign out</button>
+      <button class="head-action" id="cartButton" type="button">Cart <span class="cart-count" id="cartCount">0</span></button>
+    </div>
+    <nav><a href="#catalog">All materials</a><a href="#catalog" data-nav="Metals">Metals</a><a href="#catalog" data-nav="Polymers">Polymers</a><a href="#catalog" data-nav="Chemicals">Chemicals</a><a href="#catalog" data-nav="Construction">Construction</a><a href="#catalog" data-nav="Packaging">Packaging</a><a href="#catalog" data-nav="Agriculture">Agriculture</a></nav>
+  </header>
+  <main>
+    <section class="hero"><div><h1>Source industrial materials with confidence.</h1><p>Compare verified suppliers, transparent pricing, and ready-to-ship inventory.</p><button class="primary" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Explore materials&nbsp; →</button></div><div class="hero-note"><strong>One marketplace</strong>Thousands of products. Suppliers you can trust.</div></section>
+    <section class="benefits"><div class="benefit"><b>Verified suppliers</b>Business credentials reviewed</div><div class="benefit"><b>Transparent MOQs</b>Know order minimums upfront</div><div class="benefit"><b>Request a quote</b>Connect directly with sellers</div><div class="benefit"><b>Built for bulk</b>Materials for every operation</div></section>
+    <section id="catalog">
+      <div class="section-head"><div><h2>Popular materials</h2><p>Explore high-demand products from trusted suppliers.</p></div><div class="filters"><select id="sortSelect" aria-label="Sort products"><option value="featured">Featured</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option></select></div></div>
+      <div class="layout"><aside class="sidebar"><h3>Categories</h3><div id="categories"></div></aside><div class="products" id="products"></div></div>
+    </section>
+  </main>
+  <footer class="footer"><strong>ForgeMarket</strong><br>Industrial materials, sourced smarter.<br><br>Demo listings only. Prices and sourcing regions are indicative; confirm details with suppliers.</footer>
+  <dialog class="auth-dialog" id="authDialog" aria-labelledby="authTitle">
+    <form class="auth-form" id="authForm">
+      <button class="auth-close" id="authClose" type="button" aria-label="Close">×</button>
+      <h2 id="authTitle">Sign in</h2>
+      <p class="auth-description" id="authDescription">Sign in to your ForgeMarket account.</p>
+      <label id="nameField" hidden>Full name<input id="authName" name="name" type="text" maxlength="80" autocomplete="name"></label>
+      <label>Email address<input id="authEmail" name="email" type="email" maxlength="254" autocomplete="email" required></label>
+      <label>Password<input id="authPassword" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" required></label>
+      <p class="auth-error" id="authError" role="alert"></p>
+      <button class="primary auth-submit" id="authSubmit" type="submit">Sign in</button>
+      <p class="auth-switch"><span id="authSwitchText">New to ForgeMarket?</span> <button id="authSwitch" type="button">Create an account</button></p>
+    </form>
+  </dialog>
+  <dialog class="auth-dialog checkout-dialog" id="cartDialog" aria-labelledby="cartTitle">
+    <div class="checkout-content">
+      <button class="auth-close" id="cartClose" type="button" aria-label="Close">×</button>
+      <div id="cartReview">
+        <h2 id="cartTitle">Your cart</h2>
+        <p class="auth-description">Review your items and try the simulated checkout.</p>
+        <div class="cart-lines" id="cartLines"></div>
+        <div class="cart-total"><span>Total</span><strong id="cartTotal"></strong></div>
+        <label class="payment-label" for="mockPaymentMethod">Demo payment method</label>
+        <select class="payment-select" id="mockPaymentMethod"><option value="mock-upi">UPI (simulation)</option><option value="mock-card">Card (simulation)</option></select>
+        <p class="mock-disclaimer">Mock payment only. No real payment details are requested and no money is charged.</p>
+        <p class="auth-error" id="paymentError" role="alert"></p>
+        <button class="primary auth-submit" id="mockPayButton" type="button">Complete mock payment</button>
+      </div>
+      <div id="paymentConfirmation" hidden>
+        <h2>Demo order complete</h2>
+        <p class="auth-description">Your simulated payment was successful. No money was charged.</p>
+        <p class="order-delivery">Your order will be delivered soon. <small>This is a demo; no real delivery is arranged.</small></p>
+        <p class="order-reference">Demo order <strong id="orderReference"></strong></p>
+        <p class="cart-total"><span>Simulated total</span><strong id="orderTotal"></strong></p>
+        <button class="primary auth-submit" id="continueShopping" type="button">Continue shopping</button>
+      </div>
+    </div>
+  </dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script>
+    const items=[
+      {name:'304 Stainless Steel Sheet',category:'Metals',icon:'▤',grade:'304 · 2B finish · 1.5 mm',priceInr:3552.40,unit:'sheet',moq:'Minimum order: 10 sheets',origin:'Indicative region: Gujarat, India',rating:'★★★★★ 4.9'},
+      {name:'Aluminum 6061-T6 Bar',category:'Metals',icon:'▬',grade:'6061-T6 · 25 mm round bar',priceInr:1535.50,unit:'kg',moq:'Minimum order: 50 kg',origin:'Indicative region: Odisha, India',rating:'★★★★★ 4.8'},
+      {name:'HDPE Resin Pellets',category:'Polymers',icon:'◉',grade:'Injection molding · Natural',priceInr:178.45,unit:'kg',moq:'Minimum order: 1,000 kg',origin:'Indicative region: Gujarat, India',rating:'★★★★☆ 4.7'},
+      {name:'Industrial Epoxy Resin',category:'Chemicals',icon:'◈',grade:'High-strength · Two-part kit',priceInr:7138,unit:'kit',moq:'Minimum order: 4 kits',origin:'Indicative region: Maharashtra, India',rating:'★★★★★ 4.9'},
+      {name:'Portland Cement Type I',category:'Construction',icon:'▰',grade:'ASTM C150 · 50 kg bag',priceInr:726.25,unit:'bag',moq:'Minimum order: 40 bags',origin:'Indicative region: Rajasthan, India',rating:'★★★★☆ 4.6'},
+      {name:'Corrugated Shipping Cartons',category:'Packaging',icon:'▧',grade:'32 ECT · 400 × 300 × 250 mm',priceInr:76.36,unit:'unit',moq:'Minimum order: 500 units',origin:'Indicative region: Tamil Nadu, India',rating:'★★★★★ 4.8'},
+      {name:'Fe 500D TMT Rebar',category:'Metals',icon:'▬',grade:'IS 1786 · Fe 500D · 12 mm',priceInr:58,unit:'kg',moq:'Minimum order: 1,000 kg',origin:'Indicative region: Chhattisgarh, India',rating:'★★★★★ 4.8'},
+      {name:'Copper Wire Rod',category:'Metals',icon:'〰',grade:'ETP copper · 8 mm rod',priceInr:890,unit:'kg',moq:'Minimum order: 500 kg',origin:'Indicative region: Gujarat, India',rating:'★★★★★ 4.7'},
+      {name:'PP Homopolymer Granules',category:'Polymers',icon:'◉',grade:'Injection molding · Natural',priceInr:105,unit:'kg',moq:'Minimum order: 1,000 kg',origin:'Indicative region: Gujarat, India',rating:'★★★★☆ 4.7'},
+      {name:'Natural Rubber RSS-4',category:'Polymers',icon:'◉',grade:'Ribbed smoked sheet · RSS-4',priceInr:205,unit:'kg',moq:'Minimum order: 500 kg',origin:'Indicative region: Kerala, India',rating:'★★★★★ 4.8'},
+      {name:'Caustic Soda Flakes',category:'Chemicals',icon:'◈',grade:'Sodium hydroxide · 98% min',priceInr:52,unit:'kg',moq:'Minimum order: 500 kg',origin:'Indicative region: Gujarat, India',rating:'★★★★☆ 4.6'},
+      {name:'OPC 53 Grade Cement',category:'Construction',icon:'▰',grade:'IS 12269 · 50 kg bag',priceInr:430,unit:'bag',moq:'Minimum order: 200 bags',origin:'Indicative region: Madhya Pradesh, India',rating:'★★★★★ 4.8'},
+      {name:'BOPP Packaging Film',category:'Packaging',icon:'▧',grade:'20 micron · 500 mm roll',priceInr:165,unit:'kg',moq:'Minimum order: 250 kg',origin:'Indicative region: Maharashtra, India',rating:'★★★★☆ 4.7'},
+      {name:'Shankar-6 Cotton Lint',category:'Agriculture',icon:'☁',grade:'Indian cotton · Shankar-6 · FAQ',priceInr:62,unit:'kg',moq:'Minimum order: 170 kg bale',origin:'Indicative region: Gujarat, India',rating:'★★★★★ 4.8'},
+      {name:'Coir Fibre',category:'Agriculture',icon:'〰',grade:'Brown coir · Natural fibre',priceInr:38,unit:'kg',moq:'Minimum order: 500 kg',origin:'Indicative region: Kerala, India',rating:'★★★★☆ 4.7'}
+    ];
+    const inrFormatter=new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',minimumFractionDigits:2,maximumFractionDigits:2});
+    let authMode='login',currentUser=null;
+    let activeCategory='All',query='',cart=new Map();
+    const categories=['All','Metals','Polymers','Chemicals','Construction','Packaging','Agriculture'];
+    function renderCategories(){document.getElementById('categories').innerHTML=categories.map(c=>`<div class="category ${activeCategory===c?'active':''}" data-category="${c}">${c}<span>${c==='All'?items.length:items.filter(i=>i.category===c).length}</span></div>`).join('')}
+    function renderProducts(){let list=items.filter(i=>(activeCategory==='All'||i.category===activeCategory)&&(`${i.name} ${i.category} ${i.grade} ${i.origin}`).toLowerCase().includes(query));const sort=document.getElementById('sortSelect').value;if(sort==='low')list.sort((a,b)=>a.priceInr-b.priceInr);if(sort==='high')list.sort((a,b)=>b.priceInr-a.priceInr);const el=document.getElementById('products');el.innerHTML=list.length?list.map((i,n)=>`<article class="product"><div class="product-art" aria-hidden="true">${i.icon}</div><div class="product-body"><div class="tag">${i.category}</div><h3>${i.name}</h3><div class="spec">${i.grade}</div><div class="origin">${i.origin}</div><div class="rating">${i.rating}</div><div class="price">${inrFormatter.format(i.priceInr)} <small>/ ${i.unit}</small></div><div class="moq">${i.moq}</div><button class="add" data-add="${items.indexOf(i)}">Add to cart</button></div></article>`).join(''):'<div class="empty">No materials match your search. Try another term or category.</div>';renderCategories()}
+    function unitPricePaise(item){return Math.round(item.priceInr*100)}
+    function updateCartCount(){const count=Array.from(cart.values()).reduce((sum,quantity)=>sum+quantity,0);document.getElementById('cartCount').textContent=count}
+    function renderCart(){const cartLines=document.getElementById('cartLines');const entries=Array.from(cart.entries());cartLines.innerHTML=entries.length?entries.map(([index,quantity])=>{const item=items[index];return `<div class="cart-line"><div><div class="cart-line-name">${item.name}</div><div class="cart-line-price">${inrFormatter.format(unitPricePaise(item)/100)} / ${item.unit} · ${inrFormatter.format(unitPricePaise(item)*quantity/100)}</div></div><div class="cart-controls"><button type="button" data-cart-change="${index}" data-delta="-1" aria-label="Remove one ${item.name}">−</button><span>${quantity}</span><button type="button" data-cart-change="${index}" data-delta="1" aria-label="Add one ${item.name}">+</button></div></div>`}).join(''):'<p class="auth-description">Your cart is empty. Add materials to try the mock checkout.</p>';const totalPaise=entries.reduce((sum,[index,quantity])=>sum+unitPricePaise(items[index])*quantity,0);document.getElementById('cartTotal').textContent=inrFormatter.format(totalPaise/100);document.getElementById('mockPayButton').disabled=entries.length===0}
+    function openCart(){document.getElementById('cartReview').hidden=false;document.getElementById('paymentConfirmation').hidden=true;document.getElementById('paymentError').textContent='';renderCart();document.getElementById('cartDialog').showModal()}
+    document.getElementById('categories').addEventListener('click',e=>{const c=e.target.closest('[data-category]');if(c){activeCategory=c.dataset.category;renderProducts()}});
+    document.getElementById('products').addEventListener('click',e=>{const b=e.target.closest('[data-add]');if(b){const index=Number(b.dataset.add);const quantity=cart.get(index)||0;if(quantity>=1000){showToast('Cart limit is 1,000 per product');return}cart.set(index,quantity+1);updateCartCount();showToast(items[index].name+' added to cart')}});
+    document.getElementById('cartButton').addEventListener('click',openCart);
+    document.getElementById('cartClose').addEventListener('click',()=>document.getElementById('cartDialog').close());
+    document.getElementById('continueShopping').addEventListener('click',()=>document.getElementById('cartDialog').close());
+    document.getElementById('cartLines').addEventListener('click',event=>{const button=event.target.closest('[data-cart-change]');if(!button)return;const index=Number(button.dataset.cartChange);const quantity=(cart.get(index)||0)+Number(button.dataset.delta);if(quantity<=0)cart.delete(index);else if(quantity<=1000)cart.set(index,quantity);updateCartCount();renderCart()});
+    document.getElementById('mockPayButton').addEventListener('click',async()=>{const button=document.getElementById('mockPayButton');const error=document.getElementById('paymentError');button.disabled=true;error.textContent='';try{const result=await authRequest('/api/mock-payment',{items:Array.from(cart,([id,quantity])=>({id,quantity})),paymentMethod:document.getElementById('mockPaymentMethod').value});cart.clear();updateCartCount();document.getElementById('cartReview').hidden=true;document.getElementById('paymentConfirmation').hidden=false;document.getElementById('orderReference').textContent=result.orderId;document.getElementById('orderTotal').textContent=inrFormatter.format(result.totalPaise/100)}catch(requestError){error.textContent=requestError.message==='Failed to fetch'?'Cannot reach the backend. Start ForgeMarket using start-marketplace.bat.':requestError.message;button.disabled=cart.size===0}});
+    document.getElementById('searchForm').addEventListener('submit',e=>{e.preventDefault();query=document.getElementById('searchInput').value.trim().toLowerCase();renderProducts()});
+    document.getElementById('searchInput').addEventListener('input',e=>{query=e.target.value.trim().toLowerCase();renderProducts()});
+    document.getElementById('sortSelect').addEventListener('change',renderProducts);
+    document.querySelectorAll('[data-nav]').forEach(a=>a.addEventListener('click',()=>{activeCategory=a.dataset.nav;renderProducts()}));
+    const authDialog=document.getElementById('authDialog');
+    const authForm=document.getElementById('authForm');
+    const authError=document.getElementById('authError');
+    function setCurrentUser(user){currentUser=user;document.getElementById('signInButton').hidden=Boolean(user);document.getElementById('signUpButton').hidden=Boolean(user);document.getElementById('accountButton').hidden=!user;document.getElementById('accountButton').textContent=user?`Hi, ${user.name}`:'';document.getElementById('signOutButton').hidden=!user}
+    function setAuthMode(mode){authMode=mode;const signingUp=mode==='signup';document.getElementById('authTitle').textContent=signingUp?'Create your account':'Sign in';document.getElementById('authDescription').textContent=signingUp?'Create an account to get started with ForgeMarket.':'Sign in to your ForgeMarket account.';document.getElementById('nameField').hidden=!signingUp;document.getElementById('authName').required=signingUp;document.getElementById('authPassword').autocomplete=signingUp?'new-password':'current-password';document.getElementById('authPassword').minLength=signingUp?8:1;document.getElementById('authSubmit').textContent=signingUp?'Create account':'Sign in';document.getElementById('authSwitchText').textContent=signingUp?'Already have an account?':'New to ForgeMarket?';document.getElementById('authSwitch').textContent=signingUp?'Sign in':'Create an account';authError.textContent=''}
+    function openAuth(mode){setAuthMode(mode);authForm.reset();authDialog.showModal();document.getElementById('authEmail').focus()}
+    async function authRequest(path,body){const response=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify(body)});const result=await response.json();if(!response.ok)throw new Error(result.error||'Authentication failed. Please try again.');return result}
+    document.getElementById('signInButton').addEventListener('click',()=>openAuth('login'));
+    document.getElementById('signUpButton').addEventListener('click',()=>openAuth('signup'));
+    document.getElementById('authClose').addEventListener('click',()=>authDialog.close());
+    document.getElementById('authSwitch').addEventListener('click',()=>{const email=document.getElementById('authEmail').value;setAuthMode(authMode==='login'?'signup':'login');document.getElementById('authEmail').value=email});
+    authForm.addEventListener('submit',async event=>{event.preventDefault();authError.textContent='';const submit=document.getElementById('authSubmit');submit.disabled=true;try{const body={email:document.getElementById('authEmail').value,password:document.getElementById('authPassword').value};if(authMode==='signup')body.name=document.getElementById('authName').value;const result=await authRequest(authMode==='signup'?'/api/signup':'/api/login',body);setCurrentUser(result.user);authDialog.close();showToast(authMode==='signup'?'Account created successfully':'Signed in successfully')}catch(error){authError.textContent=error.message==='Failed to fetch'?'Cannot reach the backend. Start ForgeMarket using start-marketplace.bat.':error.message}finally{submit.disabled=false}});
+    document.getElementById('signOutButton').addEventListener('click',async()=>{try{await authRequest('/api/logout',{});setCurrentUser(null);showToast('Signed out')}catch(error){showToast(error.message==='Failed to fetch'?'Cannot reach the backend.':error.message)}});
+    if(location.protocol!=='file:')fetch('/api/me',{credentials:'same-origin'}).then(response=>response.ok?response.json():null).then(result=>{if(result&&result.user)setCurrentUser(result.user)}).catch(()=>{});
+    let toastTimer;function showToast(message){const t=document.getElementById('toast');t.textContent=message;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2300)}
+    renderProducts();
+  </script>
+</body>
+</html>
